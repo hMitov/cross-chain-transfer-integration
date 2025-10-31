@@ -57,9 +57,7 @@ contract CrossChainTransferExecutorIT is Test {
         // Check indexed params (user, token) and non-indexed params (suppliedAmount, borrowedUsdc, destinationDomain, recipient)
         // Don't check healthFactor as it's dynamic
         vm.expectEmit(true, true, false, false);
-        emit ICrossChainTransferExecutor.CrossChainTransferInitiated(
-            user, USDC, 0, 0, DESTINATION_DOMAIN, recipient, 0
-        );
+        emit ICrossChainTransferExecutor.CrossChainTransferInitiated(user, USDC, 0, 0, DESTINATION_DOMAIN, recipient, 0);
 
         // Execute transfer
         executor.executeTransfer(USDC, DESTINATION_DOMAIN, recipient, USDC_AMOUNT, MAX_FEE_USDC);
@@ -86,7 +84,7 @@ contract CrossChainTransferExecutorIT is Test {
 
         // Execute transfer
         executor.executeTransfer(WETH, DESTINATION_DOMAIN, recipient, WETH_AMOUNT, MAX_FEE_USDC);
-        
+
         // Get actual debt after transfer
         uint256 actualDebt = executor.getUserBorrows(user);
 
@@ -102,7 +100,7 @@ contract CrossChainTransferExecutorIT is Test {
         assertEq(executorWethAfter, 0, "Executor should have no WETH after deposit");
 
         assertEq(executorUsdcBalance, 0, "Executor should have no USDC after transfer");
-        
+
         // Verify debt was created
         assertGt(actualDebt, 0, "Debt should be > 0 after borrowing");
     }
